@@ -1,6 +1,3 @@
-#
-# Copyright (C) 2020 The Android Open Source Project
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -14,34 +11,38 @@
 # limitations under the License.
 #
 
+# This contains the module build definitions for the hardware-specific
+# components for this device.
+#
+# As much as possible, those components should be built unconditionally,
+# with device-specific names to avoid collisions, to avoid device-specific
+# bitrot and build breakages. Building a component unconditionally does
+# *not* include it on all devices, so it is safe even with hardware-specific
+# components.
+
 # Release name
 PRODUCT_RELEASE_NAME := a31
 
-# Inherit from common AOSP config
+# Inheritance
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
-
-# Inherit some common TWRP stuff.
-# For PitchBlack use vendor/pb/config/common.mk
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# fastbootd
 PRODUCT_PACKAGES += \
+    charger_res_images \
+    fastbootd \
     android.hardware.fastboot@1.0-impl-mock \
-    fastbootd
-
-# Charger
-PRODUCT_PACKAGES += \
-    charger_res_images
+    android.hardware.fastboot@1.0-impl-mock.recovery
 
 PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,device/samsung/a31/recovery/root,recovery/root)
 
-## Device identifier. This must come after all inclusions
+# Device identifier. This must come after all inclusions
 PRODUCT_NAME := twrp_a31
 PRODUCT_DEVICE := a31
-PRODUCT_MODEL := Galaxy A31
-PRODUCT_BRAND := samsung
-PRODUCT_MANUFACTURER := samsung
+PRODUCT_MODEL := Samsung Galaxy A31
+PRODUCT_BRAND := Samsung
+PRODUCT_MANUFACTURER := Samsung
 PRODUCT_GMS_CLIENTID_BASE := android-samsung

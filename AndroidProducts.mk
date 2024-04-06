@@ -1,6 +1,3 @@
-#
-# Copyright (C) 2020 The Android Open Source Project
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -14,7 +11,14 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := \
-	$(LOCAL_DIR)/twrp_a31.mk
+# This contains the module build definitions for the hardware-specific
+# components for this device.
+#
+# As much as possible, those components should be built unconditionally,
+# with device-specific names to avoid collisions, to avoid device-specific
+# bitrot and build breakages. Building a component unconditionally does
+# *not* include it on all devices, so it is safe even with hardware-specific
+# components.
 
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/twrp_a31.mk
 COMMON_LUNCH_CHOICES := twrp_a31-eng
